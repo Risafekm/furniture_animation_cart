@@ -11,16 +11,15 @@ import '../widgets/category_widget.dart';
 class DetailPage extends StatefulWidget {
   final Offset catListOffset;
   final int selectedCat;
-  const DetailPage({Key? key,
-  required this.catListOffset,required this.selectedCat
-  }) : super(key: key);
+  const DetailPage(
+      {Key? key, required this.catListOffset, required this.selectedCat})
+      : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> with  TickerProviderStateMixin{
-
+class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   int selectedCat = 0;
   int selectedColor = 0;
   int qty = 0;
@@ -114,27 +113,28 @@ class _DetailPageState extends State<DetailPage> with  TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: SizedBox(
         child: Stack(
           children: [
-            TweenAnimationBuilder<double>(tween: Tween(begin: 1,end: 1), duration: Duration(milliseconds: 600), builder: (context, double value, _){
-              return Hero(tag: 'blue_card', child: Material(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(value * 15),
-                  ),
-                ),
-              ));
-            }),
+            TweenAnimationBuilder<double>(
+                tween: Tween(begin: 1, end: 1),
+                duration: Duration(milliseconds: 600),
+                builder: (context, double value, _) {
+                  return Hero(
+                      tag: 'blue_card',
+                      child: Material(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(value * 15),
+                          ),
+                        ),
+                      ));
+                }),
             const BackButtonIcon(),
-            Positioned(
-                top: 80,
-                child: categoryWithoutTag()),
-            Positioned(
-                top: widget.catListOffset.dy,
-                child: categoryWithTag()),
+            Positioned(top: 80, child: categoryWithoutTag()),
+            Positioned(top: widget.catListOffset.dy, child: categoryWithTag()),
             Positioned(
                 top: 190,
                 right: 0,
@@ -149,79 +149,94 @@ class _DetailPageState extends State<DetailPage> with  TickerProviderStateMixin{
                       Container(
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(35),
-                            topRight: Radius.circular(35),
-                          )
-                              ,color: Colors.white
-                        ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(35),
+                              topRight: Radius.circular(35),
+                            ),
+                            color: Colors.white),
                         child: Column(
                           children: [
-                            Padding(padding: EdgeInsets.all(15),
-                            child: Container(
-                              height: 4,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[400],
-                                borderRadius: BorderRadius.circular(20),
+                            Padding(
+                              padding: EdgeInsets.all(15),
+                              child: Container(
+                                height: 4,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[400],
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                               ),
                             ),
-                            ),
-                            Expanded(child: SingleChildScrollView(child: Column(
-                              children: [
-                                const SizedBox(height: 50,),
-                                ScaleTransition(scale: Tween<double>(
-                                  begin: 1.0,
-                                  end: 1.2
-                                ).animate(_imagePulseController),
-                                child: GestureDetector(
-                                  onLongPressStart: _onLongPressStart,
-                                  onLongPressEnd: _onLongPressEnd,
-                                  onLongPressMoveUpdate: _onLongPressMoveUpdate,
-                                  child: SizedBox(
-                                    height: 150,
-                                    width: 150,
-                                    child: Image.asset('assets/images/box_colors/${colors[selectedColor]['colorName']}.png',key: imageKey,),
-
+                            Expanded(
+                                child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 50,
                                   ),
-
-                                ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                const ProductInfo(),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    for(var i = 0; i < colors.length; i++)
-                                      Radio(value: i, groupValue: selectedColor, onChanged: (int? value){
-                                        _imagePulseController.forward();
-                                        Future.delayed(Duration(milliseconds: 200),
-                                            (){
-                                          _imagePulseController.reverse();
-                                          setState(() {
-                                            selectedColor = value!;
-                                          });
-                                            },
-
-                                        );
-                                      },
-                                      fillColor: MaterialStateColor.resolveWith((states) => colors[i]['color'] as Color),
-                                        activeColor: colors[i]['color'] as Color,
-                                      )
-                                  ],
-                                ),
-                                const SizedBox(height: 15,),
-                                const RoundedButtons(),
-                              ],
-                            ),))
+                                  ScaleTransition(
+                                    scale: Tween<double>(begin: 1.0, end: 1.2)
+                                        .animate(_imagePulseController),
+                                    child: GestureDetector(
+                                      onLongPressStart: _onLongPressStart,
+                                      onLongPressEnd: _onLongPressEnd,
+                                      onLongPressMoveUpdate:
+                                          _onLongPressMoveUpdate,
+                                      child: SizedBox(
+                                        height: 150,
+                                        width: 150,
+                                        child: Image.asset(
+                                          'assets/images/box_colors/${colors[selectedColor]['colorName']}.png',
+                                          key: imageKey,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  const ProductInfo(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      for (var i = 0; i < colors.length; i++)
+                                        Radio(
+                                          value: i,
+                                          groupValue: selectedColor,
+                                          onChanged: (int? value) {
+                                            _imagePulseController.forward();
+                                            Future.delayed(
+                                              Duration(milliseconds: 200),
+                                              () {
+                                                _imagePulseController.reverse();
+                                                setState(() {
+                                                  selectedColor = value!;
+                                                });
+                                              },
+                                            );
+                                          },
+                                          fillColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) => colors[i]['color']
+                                                      as Color),
+                                          activeColor:
+                                              colors[i]['color'] as Color,
+                                        )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const RoundedButtons(),
+                                ],
+                              ),
+                            ))
                           ],
                         ),
                       ),
                       Positioned(
                           bottom: 0,
-                          right:  0,
+                          right: 0,
                           child: SizedBox(
                             height: 120,
                             width: 120,
@@ -229,58 +244,55 @@ class _DetailPageState extends State<DetailPage> with  TickerProviderStateMixin{
                               key: fabKey,
                               alignment: AlignmentDirectional.center,
                               children: [
-                                AnimatedContainer(duration: Duration(milliseconds: 300),
-                                width: 60 + targetDistance,
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 300),
+                                  width: 60 + targetDistance,
                                   height: 60 + targetDistance,
                                   transform: Matrix4.rotationZ(
-                                    targetDistance * math.pi / 90
-                                  ),
+                                      targetDistance * math.pi / 90),
                                   transformAlignment: Alignment.center,
-                                  decoration:const  BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/gradient.png'
-                                      ),
-                                      fit: BoxFit.cover
-                                    ),
-                                    shape: BoxShape.circle
-                                  ),
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/gradient.png'),
+                                          fit: BoxFit.cover),
+                                      shape: BoxShape.circle),
                                 ),
                                 Center(
-                                  child: Image.asset('assets/images/bag.png',
-                                  width: 21 + targetDistance /20,
+                                  child: Image.asset(
+                                    'assets/images/bag.png',
+                                    width: 21 + targetDistance / 20,
                                   ),
                                 ),
-                                Positioned(child: AnimatedOpacity(
-                                  opacity: qty > 0 ? 1 :0,
-                                  duration:  Duration(
-                                    milliseconds: qty > 0 ?1000:100
-                                  ),
-                                  curve:  Curves.easeIn,
+                                Positioned(
+                                    child: AnimatedOpacity(
+                                  opacity: qty > 0 ? 1 : 0,
+                                  duration: Duration(
+                                      milliseconds: qty > 0 ? 1000 : 100),
+                                  curve: Curves.easeIn,
                                   child: ScaleTransition(
-                                    scale: Tween<double>(
-                                      begin: 1.0,
-                                      end: 1.4
-                                    ).animate(_qtyPulseController),
+                                    scale: Tween<double>(begin: 1.0, end: 1.4)
+                                        .animate(_qtyPulseController),
                                     child: AnimatedContainer(
-                                      duration: Duration(
-                                        milliseconds: 400
-                                      ),
-                                      height: qty > 0 ?16:1,
-                                      width: qty>0?16:1,
-                                      transform: Matrix4.rotationZ(targetDistance<100?0:-50*math.pi/90),
+                                      duration: Duration(milliseconds: 400),
+                                      height: qty > 0 ? 16 : 1,
+                                      width: qty > 0 ? 16 : 1,
+                                      transform: Matrix4.rotationZ(
+                                          targetDistance < 100
+                                              ? 0
+                                              : -50 * math.pi / 90),
                                       transformAlignment: Alignment.centerRight,
                                       decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Theme.of(context).primaryColor
-                                      ),
+                                          shape: BoxShape.circle,
+                                          color:
+                                              Theme.of(context).primaryColor),
                                       child: Center(
-                                        child: 
-                                        Text(qty.toString(),
-                                        style: TextStyle(fontSize: 10,
-                                        color: Colors.white,
-                                          fontWeight: FontWeight.w600
-                                        ),
+                                        child: Text(
+                                          qty.toString(),
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600),
                                         ),
                                       ),
                                     ),
@@ -289,16 +301,17 @@ class _DetailPageState extends State<DetailPage> with  TickerProviderStateMixin{
                               ],
                             ),
                           )),
-                      if(showDragWidget)
+                      if (showDragWidget)
                         AnimatedPositioned(
                             top: dragOffset.dy + targetDistance,
-                            left:  dragOffset.dx + targetDistance,
+                            left: dragOffset.dx + targetDistance,
                             child: SizedBox(
                               height: (150 - targetDistance).abs(),
                               width: (150 - targetDistance).abs(),
-                              child: Image.asset('assets/images/box_colors/${colors[selectedColor]['colorName']}.pnh'),
-                              
-                            ), duration: Duration(milliseconds: 100))
+                              child: Image.asset(
+                                  'assets/images/box_colors/${colors[selectedColor]['colorName']}.png'),
+                            ),
+                            duration: Duration(milliseconds: 100))
                     ],
                   ),
                 )),
@@ -307,6 +320,7 @@ class _DetailPageState extends State<DetailPage> with  TickerProviderStateMixin{
       ),
     );
   }
+
   Widget categoryWithTag() {
     return FadeOut(
       child: Hero(
